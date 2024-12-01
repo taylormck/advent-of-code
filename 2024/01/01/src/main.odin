@@ -28,7 +28,6 @@ main :: proc() {
         nums := strings.split(line, "   ")
         strings.trim_space(nums[0])
         strings.trim_space(nums[1])
-        fmt.printfln("left: '{}', right: '{}'", nums[0], nums[1])
 
         left_num, ok_left := strconv.parse_uint(nums[0])
         if !ok_left {
@@ -46,6 +45,22 @@ main :: proc() {
         append(&right_list, u32(right_num))
     }
 
-    fmt.printfln("Left list: {}", left_list)
-    fmt.printfln("Right list: {}", right_list)
+    sort.quick_sort(left_list[:])
+    sort.quick_sort(right_list[:])
+
+    rows := soa_zip(left_list[:], right_list[:])
+
+    num_rows := len(&left_list)
+    sum_diff: u32 = 0
+    for left, i in left_list {
+        right := right_list[i]
+
+        if left > right {
+            sum_diff += left - right
+        } else {
+            sum_diff += right - left
+        }
+    }
+
+    fmt.printfln("total difference: {}", sum_diff)
 }
