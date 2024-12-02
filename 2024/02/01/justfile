@@ -1,0 +1,14 @@
+run-example:
+    cat data/example_01.txt | odin run src
+
+run-input:
+    cat data/input.txt | odin run src
+
+build:
+    odin build src -o:speed
+
+run-release: build
+    cat data/input.txt src.bin
+
+test:
+    odin test src
